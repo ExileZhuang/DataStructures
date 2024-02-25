@@ -1,0 +1,10 @@
+/pycharm/bin/icons/icons.db/0/
+/pycharm/help/help.pdf/0/
+/pycharm/jbl/bin/server/server.py/0/
+/pycharm/jbl/include/include.txt/0/
+/pycharm/lib/libs/libs.jar/0/
+/pycharm/lib/libs/libpaths/0/
+/pycharm/licence/licence.txt/0/
+/pycharm/pycharm.txt/0/
+/pycharm/build.txt/0/
+/build/builds/build.txt/0/
