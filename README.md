@@ -108,5 +108,192 @@ public:
 };
 ```  
 #### 外排序
+首先实现最小输者树(MinLoserTree):
+```
+template<class T>
+class MinLoserTree
+{
+private:
+
+    int arraySize;//元素个数;
+
+    T *loser;//输者树;
+
+    T theWiner;
+
+public:
+
+    MinLoserTree(int _size);//初始化函数，构造最小输者树;
+
+    void output();//输出整个输者树;
+
+    T returnWiner();//返回赢者;
+
+    void replay(int key,T val);//对原本数组中第key个元素改为val并重构输者树;
+
+    void play(T *array);//实现最小输者树;
+
+    ~MinLoserTree();
+};
+```
+通过最小输者树(MinLoserTree)实现外排序(ExternalSort):
+```
+class ExternalSort
+{
+private:
+
+    int k;
+
+    int **nums;
+
+    int bufSize;
+
+    int* buf;
+
+
+public:
+
+    ExternalSort(int **_nums,int _bufSize,int _k);//构造函数;
+
+    ~ExternalSort();//析构函数;
+
+    void sort(int* _nums,int numsSize);//对单个数组进行最小生成树的排序;
+
+    void externalSort();//对所有元素进行外排序;
+
+    int* returnBuf();
+
+    void clearBuf();
+};
+```  
 #### 网络放大器
+首先实现节点(Node):
+```
+struct Node
+{
+    int Num;//序号;
+
+    Node** children;//存储子节点及其花费;
+
+    int* childrenCost;//对应节点的花费;
+
+    int childrenSize;//子节点个数;
+
+    int degreeToLeaf;
+
+    bool isBooster;//是否放置了网络放大器;
+
+    Node(int _Num):Num(_Num);
+
+    void push(Node* pNode,int cost);
+};
+```
+然后实现网络放大器(NetworkerAmplifier):
+```
+class NetAmplifiers
+{
+private:
+
+    Node* root;//根节点;
+
+    vector<Node> nodes;//存储所有图结构;
+
+    int nodeSize;//所有节点范围：1-nodeSize;
+
+    int PMin;//最小压力;
+
+    int PMax;//最大压力;
+
+    void degrees(Node* nowNode,int& cnt);//递归遍历整棵树求出所需放大器个数;
+
+public:
+
+    NetAmplifiers(int _noedeSize,int _PMin,int _PMax);
+
+    int SolutionA();//第一种方法求解所需的放大器个数;
+
+    int SolutionB();//第二种方法求解所需的放大器个数;
+
+    void output(Node* tempNode);
+
+    Node* returnRoot();
+};
+```  
 #### 跳表
+跳表(SkipList)是链表(List)的改进，用空间换时间。   
+首先实现跳表(SkipList)的节点(SkipNode)，存储为键-值方式：
+```
+template<class T>
+struct skipNode//跳表节点;
+{
+    int key;//关键字，定为int型;
+    T val;//关键字所对应的值;
+    skipNode<T> **next;//一个可以指向多个节点的多层节点指针;
+
+    skipNode(int _key,T _val,int size):key(_key),val(_val);
+
+    skipNode(int _key,int size):key(_key);
+
+    ~skipNode();
+
+    bool operator<(const skipNode &tempNode) const;//重载<号，只比较key；
+};
+```
+随后实现跳表(SkipList),规定对于跳表每一层，每两个节点具有一个索引，即对于跳表从上层到底层，严格意义上的节点数是1，2，4，8···：
+```
+template<class T>
+class skipList
+{
+
+private:
+
+    skipNode<T>* headNode;//跳表的头节点,视为minKey;
+
+    skipNode<T>* tailNode;//跳表尾节点，视为maxKey;
+
+    int MaxLevel;//最大层数,从[0,MaxLevel);
+
+    int levels;//当前最大层数，数据范围从[0,MaxLevel);
+
+    int nodeSize;//除headNode和tailNode外的有效节点个数;
+    
+    int maxKey,minKey;//最大和最小关键字;
+
+    default_random_engine randomEngine;//随机数引擎;
+
+    int randomLevel(int maxLevel);//返回[0,maxLevel)以此确定该数的最高层;
+
+    int optimize(skipNode<T>* firNode,skipNode<T>* secNode,int nowLevel);//对第nowLevel层firNode到secNode节点(secNode为firNode第nowLevel层下一节点)间进行时间复杂度为O(1)的局部优化，使其部分满足严格跳表;
+
+public:
+
+    skipList(int _maxKey,int _minKey,int _maxLevel);//初始化;
+
+    ~skipList();
+
+    bool empty();//判断是否为空，为空返回true;
+
+    int size();//返回节点个数;
+
+    bool push(int _key,T _val);//将关键字为_key,值为_val的节点加入跳表中;
+
+    int findIndex(T _val);//找到值为_val的关键字并返回其关键字;
+
+    T findValue(int _key);//找到关键字为_key的值;
+
+    void pop_back();//将关键字最大的节点删除;
+
+    void pop_front();//将关键字最小的节点删除;
+
+    void erase(int _key);//将关键字为_key的节点删除;
+
+    void clear();//清空跳表内所有元素;
+
+    void output();//展示跳表中每层的元素;
+
+    void StrictSkip();//将整个跳表进行严格化;
+
+};
+```
+## 贡献者
+[ExileZhuang](https://github.com/ExileZhuang)
